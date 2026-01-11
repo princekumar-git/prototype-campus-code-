@@ -435,7 +435,7 @@
                     <ul class="space-y-3">
                         <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Features</a></li>
                         <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Pricing</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="document.html" class="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
                     </ul>
                 </div>
 
@@ -489,7 +489,44 @@
             </div>
         </div>
     </footer>
-    <!-- End Footer -->
+
+    <div id="loginModal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-900/75 backdrop-blur-sm transition-opacity" onclick="closeLoginModal()"></div>
+
+        <div class="fixed inset-0 z-10 overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                
+                <div class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-gray-200 dark:border-gray-700">
+                    
+                    <div class="bg-white dark:bg-gray-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                                <h3 class="text-xl font-bold leading-6 text-gray-900 dark:text-white mb-2" id="modal-title">Sign In</h3>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">
+                                    Enter your credentials to access the CampusCode portal.
+                                </p>
+
+                                <div class="space-y-3">
+                                    <input type="email" id="emailInput" placeholder="Email Address" class="block w-full rounded-lg border-0 py-3 pl-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-primary-600 sm:text-sm sm:leading-6 dark:bg-gray-700 dark:text-white dark:ring-gray-600">
+                                    
+                                    <input type="password" id="passwordInput" placeholder="Password" class="block w-full rounded-lg border-0 py-3 pl-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-primary-600 sm:text-sm sm:leading-6 dark:bg-gray-700 dark:text-white dark:ring-gray-600">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-50 dark:bg-gray-900/50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                        <button type="button" onclick="executeLogin()" class="inline-flex w-full justify-center rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-primary-500 sm:ml-3 sm:w-auto transition-colors">
+                            Login
+                        </button>
+                        <button type="button" onclick="closeLoginModal()" class="mt-3 inline-flex w-full justify-center rounded-md bg-white dark:bg-gray-700 px-3 py-2 text-sm font-semibold text-gray-900 dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600 sm:mt-0 sm:w-auto transition-colors">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script>
         // --- Typewriter Effect ---
@@ -541,6 +578,53 @@
         document.getElementById('mobileMenuBtn').addEventListener('click', () => {
             document.getElementById('mobileMenu').classList.toggle('hidden');
         });
+
+        // --- INTEGRATION LOGIC: Modal & Routing ---
+        const modal = document.getElementById('loginModal');
+
+        function openLoginModal() {
+            modal.classList.remove('hidden');
+            // Clear inputs on open
+            document.getElementById("emailInput").value = "";
+            document.getElementById("passwordInput").value = "";
+        }
+
+        function closeLoginModal() {
+            modal.classList.add('hidden');
+        }
+
+        function executeLogin() {
+            const email = document.getElementById("emailInput").value.trim();
+            const password = document.getElementById("passwordInput").value.trim();
+
+            // 1. Check Password (Universal)
+            if (password !== "USER@1234") {
+                alert("Invalid Password!");
+                return;
+            }
+
+            // 2. Check Email and Redirect
+            switch(email) {
+                case "user@edu.com":
+                    sessionStorage.setItem("currentUserRole", "student");
+                    window.location.href = "/student/prototype/index.html"; 
+                    break;
+                case "faculty@edu.com":
+                    sessionStorage.setItem("currentUserRole", "faculty");
+                    window.location.href = "/faculty/dashboard.html";
+                    break;
+                case "hod@edu.com":
+                    sessionStorage.setItem("currentUserRole", "hod");
+                    window.location.href = "/hod/dashboard.html";
+                    break;
+                case "admin@edu.com":
+                    sessionStorage.setItem("currentUserRole", "admin");
+                    window.location.href = "/admin/dashboard.html";
+                    break;
+                default:
+                    alert("Invalid Email Address! Please use a registered institutional email.");
+            }
+        }
     </script>
 </body>
 </html>
