@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusCode - Contest Overview</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { 
+                        sans: ["Poppins", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"]
+                    },
+                    colors: {
+                        primary: { 50: "#E7F0FA", 100: "#D0E1F5", 200: "#7BA4D0", 300: "#4D84C0", 400: "#2E5E99", 500: "#1E4A7A", 600: "#0D2440" },
+                        dark: { bg: "#111827", card: "#1F2937", text: "#F9FAFB", border: "#374151" }
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 min-h-screen font-sans text-gray-800 dark:text-gray-200 transition-colors duration-200">
+
+    <header class="h-16 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 fixed w-full z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="flex items-center gap-2 text-primary-500 text-xl font-bold">
+                    <i class="fas fa-code"></i> <span>CampusCode</span>
+                </a>
+                <div class="h-6 w-px bg-gray-300 dark:bg-gray-600 mx-2"></div>
+                <a href="contest.html" class="text-sm font-medium text-gray-500 hover:text-primary-500 dark:text-gray-400 dark:hover:text-white flex items-center gap-2 transition-colors">
+                    <i class="fas fa-arrow-left"></i> All Contests
+                </a>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button id="themeToggleBtn" class="p-2 rounded-md text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <div class="relative">
+                    <button id="notificationBtn" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none">
+                        <i class="fas fa-bell text-xl"></i>
+                        <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500 border-2 border-white dark:border-gray-800"></span>
+                    </button>
+                </div>
+
+                <button id="headerProfileBtn" class="ml-2 flex items-center gap-3 p-1 pr-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                    <div class="h-9 w-9 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold text-xs">JD</div>
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200 hidden sm:block">John Doe</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <div class="lg:col-span-2 space-y-8">
+                
+                <div class="relative rounded-2xl overflow-hidden bg-[#1E293B] text-white p-8 md:p-10 shadow-lg">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-primary-500/20 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="flex gap-2 mb-4">
+                            <span class="inline-block px-3 py-1 rounded-full bg-primary-500/30 border border-primary-400/30 text-primary-200 text-xs font-bold uppercase tracking-wider">
+                                Rated for All
+                            </span>
+                            <span class="inline-block px-3 py-1 rounded-full bg-red-500/30 border border-red-400/30 text-red-200 text-xs font-bold uppercase tracking-wider">
+                                Ended
+                            </span>
+                        </div>
+                        
+                        <h1 class="text-4xl md:text-5xl font-extrabold mb-2">Weekly Battle #41</h1>
+                        <p class="text-gray-300 mb-6 font-mono text-sm">Organized by Dept. of CSE</p>
+                        
+                        <div class="flex flex-wrap items-center gap-6 text-sm font-medium">
+                            <div class="flex items-center gap-2">
+                                <i class="far fa-calendar text-primary-300"></i>
+                                <span>14 Jan 2026</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="far fa-clock text-primary-300"></i>
+                                <span>08:00 PM - 10:00 PM IST</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="fas fa-hourglass-half text-primary-300"></i>
+                                <span>2.00 Hours</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Practice Problems</h3>
+                    <div class="space-y-3">
+                        
+                        <div class="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700">
+                            <div>
+                            <div class="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700">
+                                <span class="font-bold text-gray-800 dark:text-white">Division 1</span>
+                                <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">Rating >= 1600</span>
+    </div>
+    
+    <button onclick="window.location.href='div.html'" class="px-6 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:border-primary-500 text-primary-600 dark:text-blue-400 text-sm font-bold rounded-lg transition-colors">solve <i class="fas fa-arrow-right"></i>
+    </button>
+</div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700">
+                            <div>
+                                <span class="font-bold text-gray-800 dark:text-white">Division 2</span>
+                                <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">Rating < 1600</span>
+                            </div>
+                            <button onclick="window.location.href='contest-details.html'" class="px-6 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:border-primary-500 text-primary-600 dark:text-blue-400 text-sm font-bold rounded-lg transition-colors">
+                                Solve <i class="fas fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 border border-gray-100 dark:border-gray-700">
+                            <div>
+                                <span class="font-bold text-gray-800 dark:text-white">Division 3</span>
+                                <span class="text-sm text-gray-500 dark:text-gray-400 ml-2">Rating < 1400</span>
+                            </div>
+                            <button onclick="window.location.href='contest-details.html'" class="px-6 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:border-primary-500 text-primary-600 dark:text-blue-400 text-sm font-bold rounded-lg transition-colors">
+                                Solve <i class="fas fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 dark:bg-blue-900/10 rounded-xl border border-blue-100 dark:border-blue-900/30 p-6">
+                    <h3 class="text-sm font-bold uppercase tracking-wide text-primary-600 dark:text-blue-400 mb-2">Announcements</h3>
+                    <p class="text-sm text-gray-700 dark:text-gray-300">
+                        <i class="fas fa-info-circle mr-2"></i> The contest has ended. Editorials are now available in the "Practice" section.
+                    </p>
+                </div>
+
+                <div class="prose dark:prose-invert max-w-none">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">About CampusCode Battles</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm leading-relaxed">
+                        CampusCode Battles are weekly programming contests designed to help you prepare for technical interviews and improve your algorithmic thinking. Problems are curated by industry experts and cover topics from Arrays to Dynamic Programming.
+                    </p>
+
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Rules & Regulations</h3>
+                    <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400 list-none pl-0">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                            <span>This is an IOI-style contest. Problems will be partially graded based on test cases passed.</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                            <span>Plagiarism is strictly prohibited. Our AI system checks code similarity across all submissions.</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="lg:col-span-1 space-y-6">
+                
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-5">
+                    <h3 class="font-bold text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-700 pb-3 mb-4 flex justify-between items-center">
+                        Contest Ended
+                    </h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Have a look at our past contests:</p>
+                    
+                    <div class="space-y-0">
+                        <div class="flex text-[10px] font-bold text-gray-400 uppercase tracking-wide px-2 mb-2">
+                            <div class="w-1/3">Contest</div>
+                            <div class="w-1/3 text-center">Date</div>
+                            <div class="w-1/3 text-right">Duration</div>
+                        </div>
+
+                        <div class="flex items-center text-xs px-2 py-2 border-t border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                            <div class="w-1/3 font-bold text-primary-600 dark:text-blue-400 underline cursor-pointer">Battle 40</div>
+                            <div class="w-1/3 text-center text-gray-600 dark:text-gray-400">07 Jan</div>
+                            <div class="w-1/3 text-right text-gray-600 dark:text-gray-400">2 Hrs</div>
+                        </div>
+
+                        <div class="flex items-center text-xs px-2 py-2 border-t border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                            <div class="w-1/3 font-bold text-primary-600 dark:text-blue-400 underline cursor-pointer">Battle 39</div>
+                            <div class="w-1/3 text-center text-gray-600 dark:text-gray-400">31 Dec</div>
+                            <div class="w-1/3 text-right text-gray-600 dark:text-gray-400">2 Hrs</div>
+                        </div>
+
+                        <div class="flex items-center text-xs px-2 py-2 border-t border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                            <div class="w-1/3 font-bold text-primary-600 dark:text-blue-400 underline cursor-pointer">Grand 05</div>
+                            <div class="w-1/3 text-center text-gray-600 dark:text-gray-400">24 Dec</div>
+                            <div class="w-1/3 text-right text-gray-600 dark:text-gray-400">3 Hrs</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-2 text-right">
+                        <a href="contest.html" class="text-xs font-bold text-primary-600 dark:text-blue-400 hover:underline">see more >></a>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-5">
+                    <h3 class="font-bold text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-700 pb-3 mb-4">
+                        Important Links
+                    </h3>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-blue-400 flex items-center gap-2 underline decoration-gray-300">Contest Introduction</a></li>
+                        <li><a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-blue-400 flex items-center gap-2 underline decoration-gray-300">Textual Problem Solutions</a></li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-r from-blue-500 to-primary-600 rounded-xl p-0 overflow-hidden shadow-lg">
+                    <div class="p-4 text-white">
+                        <h3 class="font-bold text-lg mb-1">Master DSA</h3>
+                        <div class="h-1 w-12 bg-white/50 mb-2"></div>
+                        <p class="text-[10px] text-blue-100 opacity-90">Complete roadmap to crack product-based companies.</p>
+                    </div>
+                    <div class="bg-black/20 p-2 text-center">
+                        <span class="text-xs font-bold text-white uppercase tracking-wider cursor-pointer">Start Learning</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <div id="profileOverlay" class="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+        <div class="w-[340px] bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden animate-[fadeIn_0.2s_ease-out]">
+            <div class="bg-[#1E4A7A] dark:bg-[#0f2a4a] relative pt-8 pb-16 px-6 text-center">
+                <button id="closeProfileOverlay" class="absolute top-4 right-4 text-white/70 hover:text-white"><i class="fas fa-times text-lg"></i></button>
+                <div class="absolute top-4 left-4">
+                     <button class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white hover:bg-white/20"><i class="fas fa-qrcode text-xs"></i></button>
+                </div>
+                <div class="absolute left-1/2 bottom-[-45px] -translate-x-1/2">
+                    <div class="w-24 h-24 rounded-full bg-[#1E4A7A] p-1"> 
+                         <div class="w-full h-full rounded-full bg-[#1E4A7A] flex items-center justify-center text-white text-4xl font-normal border-4 border-white dark:border-gray-800">JD</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-14 pb-6 px-6 text-center">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">John Doe</h2>
+                <div class="flex flex-col items-center mt-1 text-sm text-gray-500 dark:text-gray-400">
+                    <span class="flex items-center gap-1"><i class="fas fa-users text-xs"></i> XYZ college</span>
+                    <span>ID: CS2025_001</span>
+                </div>
+                <div class="flex justify-between mt-6 px-2">
+                    <div class="text-center">
+                        <div class="text-[10px] font-bold text-[#1E4A7A] dark:text-blue-400 uppercase tracking-wide">Solved</div>
+                        <div class="text-xl font-bold text-gray-900 dark:text-white mt-1">124</div>
+                    </div>
+                    <div class="text-center border-l border-r border-gray-100 dark:border-gray-700 px-4">
+                        <div class="text-[10px] font-bold text-[#1E4A7A] dark:text-blue-400 uppercase tracking-wide">Rank</div>
+                        <div class="text-xl font-bold text-gray-900 dark:text-white mt-1">42</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-[10px] font-bold text-[#1E4A7A] dark:text-blue-400 uppercase tracking-wide">Points</div>
+                        <div class="text-xl font-bold text-gray-900 dark:text-white mt-1">1.2k</div>
+                    </div>
+                </div>
+                <div class="h-px bg-gray-100 dark:bg-gray-700 my-6"></div>
+                <div class="space-y-2 text-left">
+                    <a href="profile.html" class="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <div class="w-6 flex justify-center text-gray-500 dark:text-gray-400"><i class="fas fa-id-card text-lg"></i></div>
+                        <span class="font-medium text-sm">My Profile</span>
+                    </a>
+                    <a href="edit-profile.html" class="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <div class="w-6 flex justify-center text-gray-500 dark:text-gray-400"><i class="fas fa-pen text-lg"></i></div>
+                        <span class="font-medium text-sm">Edit Profile</span>
+                    </a>
+                    <a href="report.html" class="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <div class="w-6 flex justify-center text-gray-500 dark:text-gray-400"><i class="fas fa-chart-pie text-lg"></i></div>
+                        <span class="font-medium text-sm">Report</span>
+                    </a>
+                    <a href="stats.html" class="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                        <div class="w-6 flex justify-center text-gray-500 dark:text-gray-400"><i class="fas fa-list text-lg"></i></div>
+                        <span class="font-medium text-sm">Stats</span>
+                    </a>
+                    <button id="logoutBtn" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 group mt-4 transition-all text-left">
+                        <div class="w-6 flex justify-center">
+                            <div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 flex items-center justify-center"><i class="fas fa-sign-out-alt text-sm"></i></div>
+                        </div>
+                        <span class="text-sm font-medium text-red-600 dark:text-red-400">Log out</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="notificationDropdown" class="fixed top-16 right-6 z-50 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 hidden animate-[fadeIn_0.1s_ease-out]">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+            <h3 class="text-sm font-semibold text-gray-800 dark:text-white">Notifications</h3>
+            <button class="text-xs text-primary-500 hover:underline">Mark all read</button>
+        </div>
+        <div class="max-h-80 overflow-y-auto divide-y divide-gray-100 dark:divide-gray-700">
+            <div class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
+                <p class="text-sm text-gray-800 dark:text-gray-200 font-medium">New contest available</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Weekly Coding Challenge #43 is live</p>
+                <span class="text-[10px] text-gray-400">2 minutes ago</span>
+            </div>
+        </div>
+        <div class="px-4 py-2 border-t border-gray-100 dark:border-gray-700 text-center">
+            <a href="#" class="text-sm text-primary-600 dark:text-blue-400 hover:underline font-medium">View all notifications</a>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. Theme Toggle ---
+        const themeBtn = document.getElementById('themeToggleBtn');
+        const html = document.documentElement;
+        
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        themeBtn.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            if (html.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+                themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.theme = 'light';
+                themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+
+        // --- 2. OVERLAYS & NOTIFICATIONS ---
+        const overlay = document.getElementById("profileOverlay");
+        const headerProfileBtn = document.getElementById("headerProfileBtn");
+        const closeBtn = document.getElementById("closeProfileOverlay");
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        if(headerProfileBtn && overlay) headerProfileBtn.addEventListener("click", () => overlay.classList.remove("hidden"));
+        if(closeBtn && overlay) closeBtn.addEventListener("click", () => overlay.classList.add("hidden"));
+        if(overlay) overlay.addEventListener("click", (e) => { if (e.target === overlay) overlay.classList.add("hidden"); });
+        
+        // Logout Logic
+        if(logoutBtn) {
+            logoutBtn.addEventListener("click", () => {
+                sessionStorage.clear();
+                window.location.href = '../../index.html';
+            });
+        }
+
+        const notifBtn = document.getElementById('notificationBtn');
+        const notifDropdown = document.getElementById('notificationDropdown');
+        if (notifBtn && notifDropdown) {
+            notifBtn.addEventListener('click', (e) => { e.stopPropagation(); notifDropdown.classList.toggle('hidden'); });
+            document.addEventListener('click', (e) => {
+                if(!notifDropdown.contains(e.target) && !notifBtn.contains(e.target)) notifDropdown.classList.add('hidden');
+            });
+        }
+    </script>
+</body>
+</html>

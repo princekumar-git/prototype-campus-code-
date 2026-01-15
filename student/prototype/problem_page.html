@@ -58,40 +58,39 @@
 </head>
 <body class="bg-white dark:bg-gray-900 h-screen flex flex-col font-sans text-gray-800 dark:text-gray-200 overflow-hidden">
 
-    <header class="h-14 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4 bg-white dark:bg-gray-800 shrink-0 z-20">
+     <header class="h-14 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4 bg-white dark:bg-gray-800 shrink-0 sticky top-0 z-20">
         <div class="flex items-center gap-4">
+            <a href="index.html" class="flex items-center gap-2 text-primary-600 dark:text-white font-bold text-xl">
                 <i class="fas fa-code text-2xl"></i>
                 <span>CampusCode</span>
             </a>
             <div class="h-6 w-px bg-gray-300 dark:bg-gray-600 mx-2"></div>
+            
             <div class="flex items-center gap-2 text-sm font-medium text-gray-600 dark:text-gray-300">
-                <a href="problems.html" class="flex items-center gap-2 text-primary-600 dark:text-white font-bold text-xl">
-                <i class="fas fa-list"></i>
-                <span>Problem List</span></a>
+                <a href="problems.html" class="flex items-center gap-2 text-gray-500 hover:text-primary-600 dark:text-gray-400 dark:hover:text-white transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Problem List</span>
+                </a>
+                
+                <button class="ml-3 text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors"><i class="fas fa-chevron-left"></i></button>
+                <button class="text-gray-400 hover:text-gray-600 dark:hover:text-white transition-colors"><i class="fas fa-chevron-right"></i></button>
             </div>
-            <button class="text-gray-400 hover:text-gray-600 dark:hover:text-white"><i class="fas fa-chevron-left"></i></button>
-            <button class="text-gray-400 hover:text-gray-600 dark:hover:text-white"><i class="fas fa-chevron-right"></i></button>
         </div>
 
         <div class="flex items-center gap-3">
-            <div class="flex items-center gap-2 bg-gray-100 dark:bg-gray-700 px-3 py-1.5 rounded-md text-sm font-mono text-gray-700 dark:text-gray-200">
-                <i class="fas fa-stopwatch text-primary-500"></i>
-                <span id="problemTimer">00:00:00</span>
-            </div>
-
-            <button class="bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-white px-4 py-1.5 rounded-md text-sm font-medium transition-colors flex items-center gap-2">
-                <i class="fas fa-play text-xs"></i> Run
-            </button>
-            <button class="bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 rounded-md text-sm font-medium transition-colors shadow-sm">
-                Submit
-            </button>
-
             <button id="themeToggleBtn" class="p-2 rounded-md text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
                 <i class="fas fa-moon"></i>
             </button>
-            <div class="h-8 w-8 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold text-xs cursor-pointer">
-                JD
-            </div>
+            <div class="relative">
+                            <button id="notificationBtn" class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 focus:outline-none">
+                                <i class="fas fa-bell text-xl"></i>
+                                <span class="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500 border-2 border-white dark:border-gray-800"></span>
+                            </button>
+                        </div>
+                        <button id="headerProfileBtn" class="ml-2 flex items-center gap-3 p-1 pr-3 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                            <div class="h-9 w-9 rounded-full bg-primary-500 flex items-center justify-center text-white font-bold text-sm">JD</div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-200 hidden sm:block">John Doe</span>
+                        </button>
         </div>
     </header>
 
@@ -102,12 +101,9 @@
                 <button class="px-4 py-2 text-sm font-medium text-primary-600 dark:text-blue-400 border-b-2 border-primary-600 dark:border-blue-400 bg-white dark:bg-gray-900">
                     <i class="fas fa-file-alt mr-1.5"></i> Description
                 </button>
-                <button class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
-                    <i class="fas fa-flask mr-1.5"></i> Editorial
-                </button>
-                <button class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
+                <a href="submission.html" class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 flex items-center">
                     <i class="fas fa-history mr-1.5"></i> Submissions
-                </button>
+                </a>
             </div>
 
             <div class="flex-1 overflow-y-auto p-6 custom-scrollbar">
@@ -262,6 +258,74 @@ public:
             </div>
         </div>
     </div>
+    <!-- Profile Overlay start -->
+     <div id="profileOverlay" class="fixed inset-0 z-[80] flex items-center justify-center bg-black/50 backdrop-blur-sm hidden">
+        <div class="w-[340px] bg-white dark:bg-gray-800 rounded-3xl shadow-2xl overflow-hidden animate-[fadeIn_0.2s_ease-out]">
+            <div class="bg-[#1E4A7A] dark:bg-[#0f2a4a] relative pt-8 pb-16 px-6 text-center">
+                <button id="closeProfileOverlay" class="absolute top-4 right-4 text-white/70 hover:text-white"><i class="fas fa-times text-lg"></i></button>
+                <div class="absolute top-4 left-4">
+                     <button class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white hover:bg-white/20"><i class="fas fa-qrcode text-xs"></i></button>
+                </div>
+                <div class="absolute left-1/2 bottom-[-45px] -translate-x-1/2">
+                    <div class="w-24 h-24 rounded-full bg-[#1E4A7A] p-1"> 
+                         <div class="w-full h-full rounded-full bg-[#1E4A7A] flex items-center justify-center text-white text-4xl font-normal border-4 border-white dark:border-gray-800">JD</div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-14 pb-6 px-6 text-center">
+                <h2 class="text-xl font-bold text-gray-900 dark:text-white">John Doe</h2>
+                <div class="flex flex-col items-center mt-1 text-sm text-gray-500 dark:text-gray-400">
+                    <span class="flex items-center gap-1"><i class="fas fa-users text-xs"></i> XYZ college</span>
+                    <span>ID: CS2025_001</span>
+                </div>
+                <div class="flex justify-between mt-6 px-2">
+                    <div class="text-center">
+                        <div class="text-[10px] font-bold text-[#1E4A7A] dark:text-blue-400 uppercase tracking-wide">Solved</div>
+                        <div class="text-xl font-bold text-gray-900 dark:text-white mt-1">124</div>
+                    </div>
+                    <div class="text-center border-l border-r border-gray-100 dark:border-gray-700 px-4">
+                        <div class="text-[10px] font-bold text-[#1E4A7A] dark:text-blue-400 uppercase tracking-wide">Rank</div>
+                        <div class="text-xl font-bold text-gray-900 dark:text-white mt-1">42</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-[10px] font-bold text-[#1E4A7A] dark:text-blue-400 uppercase tracking-wide">Points</div>
+                        <div class="text-xl font-bold text-gray-900 dark:text-white mt-1">1.2k</div>
+                    </div>
+                </div>
+                <div class="h-px bg-gray-100 dark:bg-gray-700 my-6"></div>
+                <div class="space-y-2 text-left">
+                    <a href="profile.html" class="nav-item block py-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded"><i class="fas fa-id-card mr-2"></i><span>My Profile </span></a>
+                    <a href="report.html" class="nav-item block py-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded"><i class="fas fa-chart-pie mr-2"></i><span>Report</span></a>
+                    <a href="stats.html" class="nav-item block py-2 hover:bg-gray-50 dark:hover:bg-gray-700 rounded"><i class="fas fa-list mr-2"></i><span>Stats</span></a>
+                    <button id="logoutBtn" class="w-full flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 group mt-4 transition-all text-left">
+        <div class="w-6 flex justify-center">
+            <div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 flex items-center justify-center">
+                <i class="fas fa-sign-out-alt text-sm"></i>
+            </div>
+        </div>
+        <span class="text-sm font-medium text-red-600 dark:text-red-400">Log out</span>
+    </button>
+            </div>
+        </div>
+    </div>
+     <!--profile overlay end -->
+     <!-- Notification Dropdown -->
+    <div id="notificationDropdown" class="fixed top-16 right-6 z-50 w-80 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-gray-100 dark:border-gray-700 hidden animate-[fadeIn_0.1s_ease-out]">
+        <div class="flex items-center justify-between px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+            <h3 class="text-sm font-semibold text-gray-800 dark:text-white">Notifications</h3>
+            <button class="text-xs text-primary-500 hover:underline">Mark all read</button>
+        </div>
+        <div class="max-h-80 overflow-y-auto divide-y divide-gray-100 dark:divide-gray-700">
+            <div class="px-4 py-3 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer">
+                <p class="text-sm text-gray-800 dark:text-gray-200 font-medium">New contest available</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Weekly Coding Challenge #43 is live</p>
+                <span class="text-[10px] text-gray-400">2 minutes ago</span>
+            </div>
+        </div>
+        <div class="px-4 py-2 border-t border-gray-100 dark:border-gray-700 text-center">
+            <a href="#" class="text-sm text-primary-600 dark:text-blue-400 hover:underline font-medium">View all notifications</a>
+        </div>
+    </div>
 
     <script>
         // --- 1. Theme Toggle ---
@@ -294,6 +358,33 @@ public:
             const s = String(seconds % 60).padStart(2, '0');
             timerEl.textContent = `${h}:${m}:${s}`;
         }, 1000);
+
+        // --- 3. OVERLAYS & NOTIFICATIONS ---
+            const overlay = document.getElementById("profileOverlay");
+            const headerProfileBtn = document.getElementById("headerProfileBtn");
+            const closeBtn = document.getElementById("closeProfileOverlay");
+            if(headerProfileBtn && overlay) headerProfileBtn.addEventListener("click", () => overlay.classList.remove("hidden"));
+            if(closeBtn && overlay) closeBtn.addEventListener("click", () => overlay.classList.add("hidden"));
+            if(overlay) overlay.addEventListener("click", (e) => { if (e.target === overlay) overlay.classList.add("hidden"); });
+
+            const notifBtn = document.getElementById('notificationBtn');
+            const notifDropdown = document.getElementById('notificationDropdown');
+            if (notifBtn && notifDropdown) {
+                notifBtn.addEventListener('click', (e) => { e.stopPropagation(); notifDropdown.classList.toggle('hidden'); });
+                document.addEventListener('click', (e) => {
+                    if(!notifDropdown.contains(e.target) && !notifBtn.contains(e.target)) notifDropdown.classList.add('hidden');
+                });
+            }
+
+    if(overlay) overlay.addEventListener("click", (e) => { if (e.target === overlay) overlay.classList.add("hidden"); });
+// --- Logout Button ---
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            window.location.href = '../../index.html';
+        });
+    }
+
 
         // --- 3. Submit Simulation ---
         function submitCode() {
