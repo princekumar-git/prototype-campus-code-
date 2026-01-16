@@ -166,6 +166,37 @@ Platform configuration & moderation
 - Glassmorphism	Modern frosted glass effects on modals and navbars
 - Micro-interactions	Smooth transitions, hover effects, and animated modals
 
+## 🔐 Component Diagram
+ ## 🧩 Component Diagram
+
+```mermaid
+graph LR
+    U[User Browser]
+
+    L[index.html<br/>Landing + Auth UI]
+    R[Role Router<br/>(JavaScript)]
+
+    S[Student Module]
+    F[Faculty Module]
+    H[HOD Module]
+    A[Admin Module]
+
+    UI[Shared UI Components<br/>Dashboard • Contest • Stats • Forum • Profile]
+
+    U --> L
+    L --> R
+
+    R --> S
+    R --> F
+    R --> H
+    R --> A
+
+    S --> UI
+    F --> UI
+    H --> UI
+    A --> UI
+
+
 ## 🧱 System Architecture 
 
 ```mermaid
