@@ -166,8 +166,7 @@ Platform configuration & moderation
 - Glassmorphism	Modern frosted glass effects on modals and navbars
 - Micro-interactions	Smooth transitions, hover effects, and animated modals
 
-## 🔐 Component Diagram
- ## 🧩 Component Diagram
+## 🧩 Component Diagram
 
 ```mermaid
 graph LR
