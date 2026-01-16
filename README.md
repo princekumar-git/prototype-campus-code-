@@ -194,7 +194,7 @@ graph LR
     F --> UI
     H --> UI
     A --> UI
-
+```
 
 ## 🧱 System Architecture 
 
