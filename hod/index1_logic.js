@@ -136,22 +136,8 @@ document.addEventListener("DOMContentLoaded", function () {
             if (e.target === overlay) closeProfile();
         });
     }
-     if(overlay) overlay.addEventListener("click", (e) => { if (e.target === overlay) overlay.classList.add("hidden"); });
 
-   // --- Logout Logic ---
-if (btnLogout) {
-    btnLogout.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent default button behavior
-        
-        // Optional: Clear any session data if you have it
-        // localStorage.removeItem('userToken'); 
-        
-        // Redirect to index page
-        window.location.href = '../index.html';
-    });
-}
 
-    // --- Problem Section Logic ---
     const problemTabs = document.querySelectorAll('.problem-tab');
     const problemTabContents = document.querySelectorAll('.problem-tab-content');
 
@@ -273,6 +259,14 @@ if (btnLogout) {
 
     if (btnBackToContestList) {
         btnBackToContestList.addEventListener('click', () => {
+            contestFormView.classList.add('hidden');
+            sectionManageContests.classList.remove('hidden');
+        });
+    }
+
+    const btnCancelContestForm = document.getElementById('btn-cancel-contest-form');
+    if (btnCancelContestForm) {
+        btnCancelContestForm.addEventListener('click', () => {
             contestFormView.classList.add('hidden');
             sectionManageContests.classList.remove('hidden');
         });
@@ -2002,12 +1996,10 @@ if (btnLogout) {
     }
 
     // --- Logout Button ---
+    const btnLogout = document.getElementById('btnLogout');
     if (btnLogout) {
         btnLogout.addEventListener('click', () => {
-            if (confirm('Are you sure you want to logout?')) {
-                // Redirect to index page
-                window.location.href = '../index.html';
-            }
+            window.location.href = 'dashboard.html';
         });
     }
 
@@ -2773,19 +2765,7 @@ if (exportContestModal) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    // --- Default Report Type Auto-Select ---
-    const reportDropdownRef = document.getElementById('reportTypeDropdown');
-    // Check if we are on the report page (dropdown exists) and it has no value selected
-    if (reportDropdownRef && !reportDropdownRef.value) {
-        console.log('Auto-selecting default report: Student Report');
-        reportDropdownRef.value = 'Student Report';
-
-        // Trigger the change event to open the modal
-        const event = new Event('change', { bubbles: true });
-        reportDropdownRef.dispatchEvent(event);
-    }
-});
+// Auto-selection removed - reports page starts without pre-selected report
 
 // --- Inner Report UI Logic (copied from index1.html concept) ---
 function initReportUI() {

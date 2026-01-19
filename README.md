@@ -113,7 +113,7 @@ prototype-campus-code/
     └── ✏️ update-report.html
 
 ```
-⚡ How to Run
+## ⚡ How to Run
 
 Since this is a static frontend prototype, no backend server or installation is required.
 
@@ -131,7 +131,7 @@ Simply double-click index.html to open it in your browser.
 
 ✅ Recommended: Use the Live Server extension in VS Code for the best experience.
 
-👥 Role-Based System Overview
+## 👥 Role-Based System Overview
 
 1.🎓 Student
 Participate in contests & solve coding problems

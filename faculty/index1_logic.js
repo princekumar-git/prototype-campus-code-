@@ -118,19 +118,26 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
+     
     // --- Profile Overlay ---
     const overlay = document.getElementById("profileOverlay");
     const navProfileBtn = document.getElementById("navProfileBtn");
     const headerProfileBtn = document.getElementById("headerProfileBtn");
+    const popupProfileBtn = document.getElementById("popupProfileBtn");
     const closeBtn = document.getElementById("closeProfileOverlay");
     const closeBtnBottom = document.getElementById("closeProfileBtnBottom");
 
-    function openProfile() { if (overlay) overlay.classList.remove("hidden"); }
+    function openProfile() {
+        if (overlay) overlay.classList.remove("hidden");
+        // Close settings popup if open
+        const settingsPopup = document.getElementById('settingsPopupMenu');
+        if (settingsPopup) settingsPopup.classList.add('hidden');
+    }
     function closeProfile() { if (overlay) overlay.classList.add("hidden"); }
 
     if (navProfileBtn) navProfileBtn.addEventListener("click", openProfile);
     if (headerProfileBtn) headerProfileBtn.addEventListener("click", openProfile);
+    if (popupProfileBtn) popupProfileBtn.addEventListener("click", openProfile);
     if (closeBtn) closeBtn.addEventListener("click", closeProfile);
     if (closeBtnBottom) closeBtnBottom.addEventListener("click", closeProfile);
 
@@ -139,13 +146,42 @@ document.addEventListener("DOMContentLoaded", function () {
             if (e.target === overlay) closeProfile();
         });
     }
-    const btnLogout = document.getElementById('btnLogout');
-    if (btnLogout) {
-        btnLogout.addEventListener('click', (e) => {
+
+    // --- Logout Functionality ---
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', (e) => {
             e.preventDefault();
+            // Redirect to login page
             window.location.href = '../index.html';
         });
     }
+
+    // --- Settings Popup Menu ---
+    const settingsBtn = document.getElementById('btn-settings-menu');
+    const settingsPopup = document.getElementById('settingsPopupMenu');
+
+    if (settingsBtn && settingsPopup) {
+        settingsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            settingsPopup.classList.toggle('hidden');
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!settingsPopup.contains(e.target) && !settingsBtn.contains(e.target)) {
+                settingsPopup.classList.add('hidden');
+            }
+        });
+
+        // Optional: Close when clicking a menu item
+        settingsPopup.querySelectorAll('button, a').forEach(item => {
+            item.addEventListener('click', () => {
+                settingsPopup.classList.add('hidden');
+            });
+        });
+    }
+
 
     // --- Problem Section Logic ---
     const problemTabs = document.querySelectorAll('.problem-tab');
@@ -168,7 +204,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const problemsListContainer = document.getElementById('problems-list-container');
     const problemFormView = document.getElementById('problem-form-view');
     const btnBackToList = document.getElementById('btn-back-to-list');
+    const btnCancelProblem = document.getElementById('btn-cancel-problem');
 
+    // Show problem form
     if (btnCreateProblem) {
         btnCreateProblem.addEventListener('click', () => {
             problemsListContainer.classList.add('hidden');
@@ -176,11 +214,19 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Close problem form (shared function for both back and cancel)
+    function closeProblemForm(e) {
+        if (e) e.preventDefault();
+        if (problemFormView) problemFormView.classList.add('hidden');
+        if (problemsListContainer) problemsListContainer.classList.remove('hidden');
+    }
+
     if (btnBackToList) {
-        btnBackToList.addEventListener('click', () => {
-            problemFormView.classList.add('hidden');
-            problemsListContainer.classList.remove('hidden');
-        });
+        btnBackToList.addEventListener('click', closeProblemForm);
+    }
+
+    if (btnCancelProblem) {
+        btnCancelProblem.addEventListener('click', closeProblemForm);
     }
 
     document.addEventListener('click', (e) => {
@@ -237,32 +283,46 @@ document.addEventListener("DOMContentLoaded", function () {
     const contestFormView = document.getElementById('contest-form-view');
     const sectionManageContests = document.getElementById('section-manage-contests');
     const btnBackToContestList = document.getElementById('btn-back-to-contest-list');
+    const btnCancelContest = document.getElementById('btn-cancel-contest');
 
-    // Toggle Contest Form
+    // Show contest form
     if (btnCreateContest && contestFormView && sectionManageContests) {
         btnCreateContest.addEventListener('click', () => {
-            // Hide the list part specifically, but we are ALREADY in #section-manage-contests
-            // The structure is: #section-manage-contests (List) AND #contest-form-view (Form) are siblings?
-            // Wait, my HTML edit put them as siblings in the HTML file, but currently only one CONTENT section is shown at a time via `showSection`.
-            // BUT, #contest-form-view is defined as a sibling of #section-manage-contests in the main structure?
-            // Let's check the HTML structure I wrote.
-            // I wrote: <div id="section-manage-contests" class="content-section">...</div> AND <div id="contest-form-view" class="...">...</div>
-            // Wait, if #contest-form-view is NOT a `content-section`, it won't be hidden by `showSection` automatically if I navigate away.
-            // But here I just want to toggle visibility WITHIN the contest tab.
-            // Actually, if I want `showSection` to manage top-level tabs, `section-manage-contests` handles the nav.
-            // When I click "Create Contest", I should probably hide the children of `section-manage-contests` or hide the section itself if the form is separate?
-            // The form is separate `div id="contest-form-view"`.
-            // So:
             sectionManageContests.classList.add('hidden');
             contestFormView.classList.remove('hidden');
         });
     }
 
+    // Close contest form (shared function for both back and cancel)
+    function closeContestForm(e) {
+        if (e) e.preventDefault();
+        if (contestFormView) contestFormView.classList.add('hidden');
+        if (sectionManageContests) sectionManageContests.classList.remove('hidden');
+
+        // Reset to Upcoming Contests tab
+        const tabUpcoming = document.getElementById('contest-tab-upcoming');
+        const tabPast = document.getElementById('contest-tab-past');
+        const listUpcoming = document.getElementById('contest-list-upcoming');
+        const listPast = document.getElementById('contest-list-past');
+
+        if (tabUpcoming && tabPast && listUpcoming && listPast) {
+            tabUpcoming.classList.add('active', 'border-primary-500', 'text-primary-600', 'dark:text-primary-400');
+            tabUpcoming.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'dark:text-gray-400', 'dark:hover:text-gray-300');
+
+            tabPast.classList.remove('active', 'border-primary-500', 'text-primary-600', 'dark:text-primary-400');
+            tabPast.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'dark:text-gray-400', 'dark:hover:text-gray-300');
+
+            listUpcoming.classList.remove('hidden');
+            listPast.classList.add('hidden');
+        }
+    }
+
     if (btnBackToContestList) {
-        btnBackToContestList.addEventListener('click', () => {
-            contestFormView.classList.add('hidden');
-            sectionManageContests.classList.remove('hidden');
-        });
+        btnBackToContestList.addEventListener('click', closeContestForm);
+    }
+
+    if (btnCancelContest) {
+        btnCancelContest.addEventListener('click', closeContestForm);
     }
 
     // Contest Tabs
@@ -468,6 +528,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+
+    
+
+
+
     // --- Dashboard Charts ---
     initDashboardCharts();
 
@@ -533,136 +598,353 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // --- Reports Logic ---
-    const reportTypeSelect = document.getElementById('reportType');
-    const actionBtn = document.getElementById('actionBtn');
-    const reportFilterContainer = document.getElementById('filterContainer');
-    const reportFormatBadge = document.getElementById('formatBadge');
-    const reportPreviewTitle = document.getElementById('previewTitle');
-    const reportTableContainer = document.getElementById('previewTableContainer');
+    const reportTypeSelect = document.getElementById('reportTypeSelect');
+    const reportSections = document.querySelectorAll('.report-section');
     const reportDateSpan = document.getElementById('currentDateReport');
-    const reportContentDiv = document.getElementById('report-content');
 
-    if (reportTypeSelect && actionBtn && reportFilterContainer) {
-        const fullData = {
-            Students: {
-                headers: ["Name", "ID", "Program", "Year", "Branch", "Score"],
-                rows: [
-                    ["Arjun Mehta", "CS01", "B.Tech", "3rd", "CSE", "920"],
-                    ["Sara Khan", "CS02", "B.Tech", "2nd", "IT", "850"],
-                    ["Liam Smith", "CS03", "B.E", "4th", "ME", "740"],
-                    ["Priya Das", "CS04", "M.Tech", "1st", "CSE", "980"]
-                ],
-                config: { format: 'XLSX', color: 'bg-emerald-500' }
-            },
-            Contests: {
-                headers: ["Contest Title", "Date", "Subject", "Participants", "Status"],
-                rows: [
-                    ["Weekly Sprint #88", "Dec 20", "Data Structures", "1,240", "Live"],
-                    ["Algorithm Master", "Dec 12", "Algorithms", "850", "Past"],
-                    ["Logic Lab", "Jan 05", "Discrete Math", "400", "Upcoming"]
-                ],
-                config: { format: 'PDF', color: 'bg-rose-500' }
-            },
-            Problems: {
-                headers: ["Problem", "Topic", "Language", "Difficulty", "Bookmark"],
-                rows: [
-                    ["Two Sum", "Arrays", "C++", "Easy", "Yes"],
-                    ["Merge Sort", "Sorting", "Java", "Medium", "No"],
-                    ["Graph DFS", "Graphs", "Python", "Hard", "Yes"]
-                ],
-                config: { format: 'XLSX', color: 'bg-blue-500' }
-            }
+    // Check if we are on the reports page (or at least have the main selector)
+    if (reportTypeSelect) {
+
+        // Mock Data for New Reports
+        const contestData = [
+            { id: 1, name: "Weekly Coding Challenge #45", date: "2024-03-15", participants: 156, avgScore: 85, topScorer: "Sagar Kumar", status: "Completed" },
+            { id: 2, name: "Weekly Coding Challenge #46", date: "2024-03-22", participants: 142, avgScore: 78, topScorer: "Priya Sharma", status: "Completed" },
+            { id: 3, name: "Monthly Hackathon - April", date: "2024-04-05", participants: 320, avgScore: 92, topScorer: "Rahul Verma", status: "Ongoing" },
+            { id: 4, name: "Weekly Coding Challenge #47", date: "2024-04-12", participants: 0, avgScore: 0, topScorer: "-", status: "Upcoming" },
+            { id: 5, name: "Freshers Coding Contest", date: "2024-02-10", participants: 210, avgScore: 65, topScorer: "New User", status: "Completed" }
+        ];
+
+        const problemData = [
+            { id: 1, title: "Two Sum", topic: "Arrays", difficulty: "Easy", attempts: 1250, successRate: "85%", avgTime: "15 mins" },
+            { id: 2, title: "Add Two Numbers", topic: "Linked List", difficulty: "Medium", attempts: 980, successRate: "60%", avgTime: "25 mins" },
+            { id: 3, title: "Median of Two Sorted Arrays", topic: "Arrays", difficulty: "Hard", attempts: 450, successRate: "35%", avgTime: "45 mins" },
+            { id: 4, title: "Longest Palindromic Substring", topic: "Strings", difficulty: "Medium", attempts: 850, successRate: "55%", avgTime: "30 mins" },
+            { id: 5, title: "Valid Parentheses", topic: "Stack", difficulty: "Easy", attempts: 1500, successRate: "90%", avgTime: "10 mins" }
+        ];
+
+        const overallData = [
+            { department: "CSE", totalStudents: 450, activeStudents: 380, problemsSolved: 12500, participation: "85%", avgRating: 1650 },
+            { department: "ECE", totalStudents: 320, activeStudents: 150, problemsSolved: 4200, participation: "45%", avgRating: 1420 },
+            { department: "ME", totalStudents: 280, activeStudents: 80, problemsSolved: 1500, participation: "25%", avgRating: 1350 },
+            { department: "CE", totalStudents: 250, activeStudents: 60, problemsSolved: 900, participation: "20%", avgRating: 1280 }
+        ];
+
+        const columnContainers = {
+            'student': document.getElementById('cols-student'),
+            'contest': document.getElementById('cols-contest'),
+            'problem': document.getElementById('cols-problem'),
+            'overall': document.getElementById('cols-overall')
         };
 
-        function syncReportTable() {
-            const type = reportTypeSelect.value;
-            const activeIndices = Array.from(reportFilterContainer.querySelectorAll('.col-toggle'))
-                .filter(i => i.checked)
-                .map(i => parseInt(i.dataset.index));
+        if (reportDateSpan) reportDateSpan.innerText = new Date().toLocaleDateString('en-GB');
 
-            if (activeIndices.length === 0) {
-                reportTableContainer.innerHTML = '<div class="py-20 text-center text-gray-400 italic">No columns selected</div>';
-                return;
-            }
+        // Event Listeners
+        reportTypeSelect.addEventListener('change', initReportUI);
 
-            let html = `<table class="report-table"><thead><tr>`;
-            activeIndices.forEach(i => html += `<th>${fullData[type].headers[i]}</th>`);
-            html += `</tr></thead><tbody>`;
-
-            fullData[type].rows.forEach(row => {
-                html += `<tr>`;
-                activeIndices.forEach(i => html += `<td>${row[i]}</td>`);
-                html += `</tr>`;
+        const clearBtns = {
+            contest: document.getElementById('clearContestFiltersBtn'),
+            problem: document.getElementById('clearProblemFiltersBtn'),
+            overall: document.getElementById('clearOverallFiltersBtn')
+        };
+        if (clearBtns.contest) {
+            clearBtns.contest.addEventListener('click', () => {
+                const s = document.getElementById('contestSearchInput');
+                const f = document.getElementById('contestStatusFilter');
+                const so = document.getElementById('contestSortFilter');
+                if (s) s.value = '';
+                if (f) f.value = '';
+                if (so) so.value = 'recent';
+                populateContestTable();
             });
-            html += `</tbody></table>`;
-            reportTableContainer.innerHTML = html;
         }
+        if (clearBtns.problem) {
+            clearBtns.problem.addEventListener('click', () => {
+                const s = document.getElementById('problemSearchInput');
+                const f = document.getElementById('problemDifficultyFilter');
+                const t = document.getElementById('problemTopicFilter');
+                const so = document.getElementById('problemSortFilter');
+                if (s) s.value = '';
+                if (f) f.value = '';
+                if (t) t.value = '';
+                if (so) so.value = 'recent';
+                populateProblemTable();
+            });
+        }
+        if (clearBtns.overall) {
+            clearBtns.overall.addEventListener('click', () => {
+                const s = document.getElementById('overallSearchInput');
+                const so = document.getElementById('overallSortFilter');
+                if (s) s.value = '';
+                if (so) so.value = 'rating';
+                populateOverallTable();
+            });
+        }
+
+        // Initial Call
+        setTimeout(initReportUI, 0); // Defer slightly to ensure DOM 
 
         function initReportUI() {
-            const type = reportTypeSelect.value;
+            const selectedType = reportTypeSelect.value || 'student';
 
-            // 1. Setup Filters
-            reportFilterContainer.innerHTML = '<p class="text-[10px] font-bold text-gray-400 uppercase mb-2">Sections to Include</p>';
-            fullData[type].headers.forEach((h, i) => {
-                const label = document.createElement('label');
-                label.className = "flex items-center gap-3 p-2 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg cursor-pointer transition-all";
-                label.innerHTML = `
-                    <input type="checkbox" checked data-index="${i}" class="col-toggle w-4 h-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500">
-                    <span class="text-xs font-medium text-gray-600 dark:text-gray-300">${h}</span>
-                `;
-                label.querySelector('input').addEventListener('change', syncReportTable);
-                reportFilterContainer.appendChild(label);
+            // 1. Show relevant Section
+            reportSections.forEach(sec => {
+                if (sec.id === `report-section-${selectedType}`) {
+                    sec.classList.remove('hidden');
+                } else {
+                    sec.classList.add('hidden');
+                }
             });
 
-            // 2. Setup Action Button
-            actionBtn.className = `w-full py-4 rounded-xl font-bold text-white shadow-lg transition-all active:scale-95 flex items-center justify-center gap-2 ${fullData[type].config.color}`;
-            actionBtn.innerHTML = `<i class="fas ${fullData[type].config.format === 'PDF' ? 'fa-file-pdf' : 'fa-file-excel'}"></i> Download ${fullData[type].config.format}`;
+            // 2. Show relevant Columns
+            Object.keys(columnContainers).forEach(key => {
+                if (columnContainers[key]) {
+                    if (key === selectedType) {
+                        columnContainers[key].classList.remove('hidden');
+                    } else {
+                        columnContainers[key].classList.add('hidden');
+                    }
+                }
+            });
 
-            if (reportFormatBadge) reportFormatBadge.innerText = fullData[type].config.format;
-            if (reportPreviewTitle) reportPreviewTitle.innerText = `${type} Report`;
-
-            syncReportTable();
+            // 3. Populate Data if needed (Mock population)
+            if (selectedType === 'contest') populateContestTable();
+            if (selectedType === 'problem') populateProblemTable();
+            if (selectedType === 'overall') populateOverallTable();
         }
 
+        // --- Data Population Functions ---
+        const emptyStateHTML = `
+            <tr>
+                <td colspan="100%" class="py-12 text-center text-gray-500 dark:text-gray-400">
+                    <div class="flex flex-col items-center justify-center">
+                        <i class="fas fa-search text-gray-300 dark:text-gray-600 text-4xl mb-3"></i>
+                        <p class="mb-2">No records found matching your filters.</p>
+                    </div>
+                </td>
+            </tr>
+        `;
+
+        function populateContestTable() {
+            const tbody = document.getElementById('contestReportBody');
+            const searchInput = document.getElementById('contestSearchInput');
+            const statusFilter = document.getElementById('contestStatusFilter');
+            const sortFilter = document.getElementById('contestSortFilter');
+            const countSpan = document.getElementById('contestVisibleCount');
+            if (!tbody) return;
+
+            function render() {
+                const term = searchInput ? searchInput.value.toLowerCase() : '';
+                const status = statusFilter ? statusFilter.value : '';
+                const sort = sortFilter ? sortFilter.value : 'recent';
+                let visibleCount = 0;
+
+                let filtered = contestData.slice();
+
+                filtered = filtered.filter(c => {
+                    const matchSearch = c.name.toLowerCase().includes(term);
+                    const matchStatus = !status || c.status === status;
+                    return matchSearch && matchStatus;
+                });
+
+                if (sort === 'participants') {
+                    filtered.sort((a, b) => b.participants - a.participants);
+                } else {
+                    filtered.sort((a, b) => b.id - a.id);
+                }
+
+                const rows = filtered.map(c => {
+                    visibleCount++;
+                    let statusClass = 'bg-gray-100 text-gray-800';
+                    if (c.status === 'Upcoming') statusClass = 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400';
+                    if (c.status === 'Ongoing') statusClass = 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400';
+
+                    return `<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                        <td class="px-4 py-3 font-medium text-gray-900 dark:text-white whitespace-nowrap">${c.name}</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300 col-contestDate whitespace-nowrap">${c.date}</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300 col-participants whitespace-nowrap">${c.participants}</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300 col-avgScore whitespace-nowrap">${c.avgScore}</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300 col-topScorer whitespace-nowrap">${c.topScorer}</td>
+                        <td class="px-4 py-3 col-contestStatus whitespace-nowrap"><span class="px-2 py-1 rounded text-xs font-medium ${statusClass}">${c.status}</span></td>
+                    </tr>`;
+                }).join('');
+
+                if (filtered.length === 0) tbody.innerHTML = emptyStateHTML;
+                else tbody.innerHTML = rows;
+
+                if (countSpan) countSpan.innerText = filtered.length;
+                updateColumnVisibility('contest');
+            }
+
+            if (searchInput) searchInput.oninput = render;
+            if (statusFilter) statusFilter.onchange = render;
+            if (sortFilter) sortFilter.onchange = render;
+            render();
+        }
+
+        function populateProblemTable() {
+            const tbody = document.getElementById('problemReportBody');
+            const searchInput = document.getElementById('problemSearchInput');
+            const diffFilter = document.getElementById('problemDifficultyFilter');
+            const topicFilter = document.getElementById('problemTopicFilter');
+            const sortFilter = document.getElementById('problemSortFilter');
+            const countSpan = document.getElementById('problemVisibleCount');
+            if (!tbody) return;
+
+            function render() {
+                const term = searchInput ? searchInput.value.toLowerCase() : '';
+                const diff = diffFilter ? diffFilter.value : '';
+                const topic = topicFilter ? topicFilter.value : '';
+                const sort = sortFilter ? sortFilter.value : 'recent';
+
+                let filtered = problemData.slice();
+
+                filtered = filtered.filter(p => {
+                    const matchSearch = p.title.toLowerCase().includes(term);
+                    const matchDiff = !diff || p.difficulty === diff;
+                    const matchTopic = !topic || p.topic === topic;
+                    return matchSearch && matchDiff && matchTopic;
+                });
+
+                if (sort === 'attempts') filtered.sort((a, b) => b.attempts - a.attempts);
+                else if (sort === 'success') filtered.sort((a, b) => parseFloat(b.successRate) - parseFloat(a.successRate));
+                else filtered.sort((a, b) => b.id - a.id);
+
+                const rows = filtered.map(p => {
+                    let diffClass = '';
+                    if (p.difficulty === 'Easy') diffClass = 'text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded text-xs';
+                    if (p.difficulty === 'Medium') diffClass = 'text-yellow-600 dark:text-yellow-400 bg-yellow-50 dark:bg-yellow-900/20 px-2 py-1 rounded text-xs';
+                    if (p.difficulty === 'Hard') diffClass = 'text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded text-xs';
+
+                    return `<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                        <td class="px-4 py-3 font-medium text-gray-900 dark:text-white whitespace-nowrap">${p.title}</td>
+                         <td class="px-4 py-3 text-gray-600 dark:text-gray-300 col-topic whitespace-nowrap">${p.topic}</td>
+                        <td class="px-4 py-3 col-difficulty whitespace-nowrap"><span class="${diffClass}">${p.difficulty}</span></td>
+                         <td class="px-4 py-3 text-gray-600 dark:text-gray-300 col-attempts whitespace-nowrap">${p.attempts}</td>
+                         <td class="px-4 py-3 text-gray-600 dark:text-gray-300 col-successRate whitespace-nowrap">${p.successRate}</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300 col-avgTime whitespace-nowrap">${p.avgTime}</td>
+                    </tr>`;
+                }).join('');
+
+                if (filtered.length === 0) tbody.innerHTML = emptyStateHTML;
+                else tbody.innerHTML = rows;
+
+                if (countSpan) countSpan.innerText = filtered.length;
+                updateColumnVisibility('problem');
+            }
+
+            if (searchInput) searchInput.oninput = render;
+            if (diffFilter) diffFilter.onchange = render;
+            if (topicFilter) topicFilter.onchange = render;
+            if (sortFilter) sortFilter.onchange = render;
+            render();
+        }
+
+        function populateOverallTable() {
+            const tbody = document.getElementById('overallReportBody');
+            const searchInput = document.getElementById('overallSearchInput');
+            const sortFilter = document.getElementById('overallSortFilter');
+            const countSpan = document.getElementById('overallVisibleCount');
+            if (!tbody) return;
+
+            function render() {
+                const term = searchInput ? searchInput.value.toLowerCase() : '';
+                const sort = sortFilter ? sortFilter.value : 'rating';
+
+                let filtered = overallData.slice();
+
+                filtered = filtered.filter(d => d.dept && d.dept.toLowerCase().includes(term));
+
+                if (sort === 'participation') filtered.sort((a, b) => parseFloat(b.participation) - parseFloat(a.participation));
+                else filtered.sort((a, b) => b.avgRating - a.avgRating);
+
+                const rows = filtered.map(d => {
+                    return `<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                        <td class="px-4 py-3 font-medium text-gray-900 dark:text-white whitespace-nowrap">${d.dept}</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300 col-totalStudents whitespace-nowrap">${d.totalStudents}</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300 col-activeStudents whitespace-nowrap">${d.activeStudents}</td>
+                        <td class="px-4 py-3 font-semibold text-primary-600 dark:text-primary-400 col-problemsSolved whitespace-nowrap">${d.problemsSolved}</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300 col-contestParticipation whitespace-nowrap">${d.contestParticipation}</td>
+                        <td class="px-4 py-3 text-gray-600 dark:text-gray-300 col-avgRating whitespace-nowrap">${d.avgRating}</td>
+                    </tr>`;
+                }).join('');
+
+                if (filtered.length === 0) tbody.innerHTML = emptyStateHTML;
+                else tbody.innerHTML = rows;
+
+                if (countSpan) countSpan.innerText = filtered.length;
+                updateColumnVisibility('overall');
+            }
+
+            if (searchInput) searchInput.oninput = render;
+            if (sortFilter) sortFilter.onchange = render;
+            render();
+        }
+
+        function updateColumnVisibility(type) {
+            const container = columnContainers[type];
+            if (!container) return;
+            const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+            const tableId = `${type}ReportTable`;
+            // Handle edge case for default student table
+            const table = type === 'student' ? document.getElementById('reportTable') : document.getElementById(tableId);
+
+            if (!table) return;
+
+            checkboxes.forEach(cb => {
+                const colClass = 'col-' + cb.dataset.column;
+                const cells = table.querySelectorAll('.' + colClass);
+                cells.forEach(cell => {
+                    if (cb.checked) cell.classList.remove('hidden');
+                    else cell.classList.add('hidden');
+                });
+            });
+        }
+
+        // Column Selection Logic - Dynamic
+        const allColumnCheckboxes = document.querySelectorAll('#columnSelection input[type="checkbox"]');
+
+        allColumnCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                // Find which report type this checkbox belongs to
+                const container = this.closest('div[id^="cols-"]');
+                if (!container) return;
+
+                // Extract type from container id: cols-student -> student
+                const type = container.id.replace('cols-', '');
+
+                // Call generic update visibility
+                updateColumnVisibility(type);
+            });
+        });
+
+        // Select All / None Logic
+        const selectAllBtn = document.getElementById('selectAllCols');
+        const selectNoneBtn = document.getElementById('selectNoneCols');
+
+        function toggleAllColumns(state) {
+            const type = reportTypeSelect.value;
+            const container = columnContainers[type];
+            if (!container) return;
+
+            const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                cb.checked = state;
+                // Update specific report table
+                updateColumnVisibility(type);
+            });
+        }
+
+        if (selectAllBtn) selectAllBtn.addEventListener('click', () => toggleAllColumns(true));
+        if (selectNoneBtn) selectNoneBtn.addEventListener('click', () => toggleAllColumns(false));
+
+
+        // Export Functionality Placeholder
         function handleReportDownload() {
             const type = reportTypeSelect.value;
-            const activeIndices = Array.from(reportFilterContainer.querySelectorAll('.col-toggle'))
-                .filter(i => i.checked)
-                .map(i => parseInt(i.dataset.index));
-
-            // Extract filtered data
-            const filteredHeaders = activeIndices.map(i => fullData[type].headers[i]);
-            const filteredRows = fullData[type].rows.map(row => activeIndices.map(i => row[i]));
-            const exportData = [filteredHeaders, ...filteredRows];
-
-            if (fullData[type].config.format === 'PDF') {
-                if (typeof html2pdf === 'undefined') {
-                    alert('PDF Library not loaded');
-                    return;
-                }
-                const element = reportContentDiv;
-                html2pdf().set({
-                    margin: 10,
-                    filename: `CampusCode_${type}_Report.pdf`,
-                    html2canvas: { scale: 3 },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                }).from(element).save();
-            } else {
-                if (typeof XLSX === 'undefined') {
-                    alert('Excel Library not loaded');
-                    return;
-                }
-                const ws = XLSX.utils.aoa_to_sheet(exportData);
-                const wb = XLSX.utils.book_new();
-                XLSX.utils.book_append_sheet(wb, ws, "Report");
-                XLSX.writeFile(wb, `CampusCode_${type}_Report.xlsx`);
-            }
+            alert(`Downloading ${type} report... (Feature Implementation in progress)`);
         }
 
         reportTypeSelect.addEventListener('change', initReportUI);
-        actionBtn.addEventListener('click', handleReportDownload);
-
-        if (reportDateSpan) reportDateSpan.innerText = new Date().toLocaleDateString('en-GB');
 
         // Initial call
         initReportUI();
