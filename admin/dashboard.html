@@ -84,7 +84,7 @@
 
             <div class="p-4 space-y-1 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 flex-shrink-0 bottom-menu">
                 <a href="help_support.html" class="nav-item"><i class="far fa-question-circle"></i><span>Help & Support</span></a>
-                <div id="settingsTrigger" class="nav-item"><i class="fas fa-cog"></i><span>Settings</span></div>
+                <a href="setting.html" class="nav-item"><i class="fas fa-cog"></i><span>Settings</span></a>
             </div>
         </aside>
 
@@ -145,7 +145,7 @@
             <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
                 
                 <div class="mb-8">
-                    <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Meerut Institute of Technology</h1>
+                    <h1 class="text-2xl font-bold text-gray-800 dark:text-white">XYZ Institute of Technology</h1>
                     <p class="text-gray-600 dark:text-gray-400">Overview of college statistics and activities</p>
 
                     <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -301,7 +301,7 @@
             </div>
             <div class="pt-12 pb-6 px-6 text-center">
                 <h3 class="text-xl font-bold text-gray-800 dark:text-white">Raj Kumar</h3>
-                <p class="text-xs text-gray-500 flex items-center justify-center gap-1"><i class="fas fa-university"></i> Meerut Institute of Technology</p>
+                <p class="text-xs text-gray-500 flex items-center justify-center gap-1"><i class="fas fa-university"></i> XYZ Institute of Technology</p>
                 <p class="text-xs text-gray-500 mb-3 flex items-center justify-center gap-1">ID: Faculty_001</p>
 
                 <div class="flex justify-between border-y border-gray-100 dark:border-gray-700 py-4 mb-6">
@@ -310,15 +310,15 @@
                     <div><p class="text-[10px] font-bold text-primary-400 uppercase">Reports</p><p class="text-lg font-bold dark:text-white">1.2k</p></div>
                 </div>
                 <div class="space-y-1">
-                    <button class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
-                        <div class="flex items-center gap-3"><i class="fas fa-user-circle text-primary-400"></i><span class="text-sm font-medium text-gray-700 dark:text-gray-200">My Profile</span></div>
+                 <a href="profile.html">   <button class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
+                        <div class="flex items-center gap-3"><i class="fas fa-user-circle text-primary-400"></i><span class="text-sm font-medium text-gray-700 dark:text-gray-200"> Profile</span></div>
                         <i class="fas fa-chevron-right text-[10px] text-gray-400 group-hover:translate-x-1 transition-transform"></i>
-                    </button>
+                    </button></a>
                     
-                    <button class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
+                  <a href="help_support.html">  <button class="w-full flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors group">
                         <div class="flex items-center gap-3"><i class="fas fa-question-circle text-primary-400"></i><span class="text-sm font-medium text-gray-700 dark:text-gray-200">Help & Support</span></div>
                         <i class="fas fa-chevron-right text-[10px] text-gray-400 group-hover:translate-x-1 transition-transform"></i>
-                    </button>
+                    </button></a>
 
                     <button id="logoutBtn" class="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 group mt-2 transition-all">
                         <div class="w-8 h-8 rounded-full bg-red-50 dark:bg-red-900/20 text-red-500 dark:text-red-400 flex items-center justify-center">
@@ -332,6 +332,46 @@
         </div>
     </div>
 
+    <!-- setting  -->
+<div id="settingsMenu" class="hidden fixed bottom-16 left-4 w-72 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-2xl rounded-2xl z-[9999] overflow-hidden transform transition-all duration-200 origin-bottom-left">
+    
+        <div class="p-2 space-y-1">
+            <div class="px-3 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Account</div>
+            <a href="profile.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl transition-colors cursor-pointer group">
+                <i class="fas fa-user-circle w-5 text-gray-400 group-hover:text-primary-500 transition-colors"></i>
+                Profile
+            </a>
+        </div>
+
+        <div class="h-px bg-gray-100 dark:bg-gray-700 mx-4"></div>
+
+        <div class="p-2 space-y-1">
+            <div class="px-3 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Preferences</div>
+            
+            <button id="themeAccordionBtn" class="w-full flex justify-between items-center px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl transition-colors cursor-pointer group focus:outline-none">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-palette w-5 text-gray-400 group-hover:text-primary-500 transition-colors"></i>
+                    <span>Theme</span>
+                </div>
+                <i id="themeChevron" class="fas fa-chevron-right text-xs text-gray-400 transition-transform duration-200"></i>
+            </button>
+
+            <div id="themeOptionsContainer" class="hidden pl-4 pr-1 space-y-1 pb-1">
+                <button data-value="light" class="theme-option w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
+                    <span class="flex items-center gap-2"><i class="fas fa-sun text-orange-400 w-4"></i> Light</span>
+                    <i class="fas fa-check text-primary-500 opacity-0 check-icon"></i>
+                </button>
+                <button data-value="dark" class="theme-option w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
+                    <span class="flex items-center gap-2"><i class="fas fa-moon text-indigo-400 w-4"></i> Dark</span>
+                    <i class="fas fa-check text-primary-500 opacity-0 check-icon"></i>
+                </button>
+                <button data-value="system" class="theme-option w-full flex items-center justify-between px-3 py-2 rounded-lg text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors">
+                    <span class="flex items-center gap-2"><i class="fas fa-desktop text-gray-400 w-4"></i> System</span>
+                    <i class="fas fa-check text-primary-500 opacity-0 check-icon"></i>
+                </button>
+            </div>
+        </div>
+    </div>
     <script>
         // --- Global Toggle Profile Function ---
         function toggleProfile() {
@@ -461,6 +501,121 @@
                 window.location.href = '../index.html';
             });
         }
+
+        // --- Settings Menu Toggle ---
+        // --- 2. SETTINGS, THEME & ACCORDION LOGIC ---
+            const settingsTrigger = document.getElementById('settingsTrigger');
+            const settingsMenu = document.getElementById('settingsMenu');
+            const themeAccordionBtn = document.getElementById('themeAccordionBtn');
+            const themeOptionsContainer = document.getElementById('themeOptionsContainer');
+            const themeChevron = document.getElementById('themeChevron');
+            const themeOptions = document.querySelectorAll('.theme-option');
+            const headerThemeBtn = document.getElementById('themeToggleBtn');
+            const headerThemeIcon = headerThemeBtn ? headerThemeBtn.querySelector('i') : null;
+
+            // A. Apply Theme Function
+            function applyTheme(themeName) {
+                const html = document.documentElement;
+                
+                if (themeName === 'dark') {
+                    html.classList.add('dark');
+                    localStorage.theme = 'dark';
+                } else if (themeName === 'light') {
+                    html.classList.remove('dark');
+                    localStorage.theme = 'light';
+                } else {
+                    // System Preference
+                    localStorage.removeItem('theme');
+                    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        html.classList.add('dark');
+                    } else {
+                        html.classList.remove('dark');
+                    }
+                }
+
+                // Update Header Icon
+                if (headerThemeIcon) {
+                    if (html.classList.contains('dark')) {
+                        headerThemeIcon.classList.replace('fa-moon', 'fa-sun');
+                    } else {
+                        headerThemeIcon.classList.replace('fa-sun', 'fa-moon');
+                    }
+                }
+                
+                // Update Chart (if exists)
+                if(window.myPerformanceChart) window.myPerformanceChart.update();
+
+                // Update Settings Menu Checkmarks
+                themeOptions.forEach(btn => {
+                    const checkIcon = btn.querySelector('.check-icon');
+                    const isSelected = btn.getAttribute('data-value') === themeName;
+                    
+                    if (isSelected) {
+                        btn.classList.add('bg-primary-50', 'dark:bg-primary-900/20', 'text-primary-600', 'dark:text-primary-400');
+                        checkIcon.classList.remove('opacity-0');
+                    } else {
+                        btn.classList.remove('bg-primary-50', 'dark:bg-primary-900/20', 'text-primary-600', 'dark:text-primary-400');
+                        checkIcon.classList.add('opacity-0');
+                    }
+                });
+            }
+
+            // B. Toggle Settings Menu
+            if (settingsTrigger && settingsMenu) {
+                settingsTrigger.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    settingsMenu.classList.toggle('hidden');
+                    
+                    // Adjust position if sidebar is collapsed
+                    if (sidebar && sidebar.classList.contains('collapsed')) {
+                        settingsMenu.style.left = '80px';
+                    } else {
+                        settingsMenu.style.left = '16px';
+                    }
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!settingsMenu.contains(e.target) && !settingsTrigger.contains(e.target)) {
+                        settingsMenu.classList.add('hidden');
+                    }
+                });
+            }
+
+            // C. Toggle Theme Accordion
+            if (themeAccordionBtn && themeOptionsContainer) {
+                themeAccordionBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    themeOptionsContainer.classList.toggle('hidden');
+                    themeChevron.style.transform = themeOptionsContainer.classList.contains('hidden') 
+                        ? 'rotate(0deg)' 
+                        : 'rotate(90deg)';
+                });
+            }
+
+            // D. Theme Option Clicks
+            themeOptions.forEach(option => {
+                option.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const selectedTheme = option.getAttribute('data-value');
+                    applyTheme(selectedTheme);
+                });
+            });
+
+            // E. Header Quick Toggle
+            if (headerThemeBtn) {
+                headerThemeBtn.addEventListener('click', () => {
+                    const isDark = document.documentElement.classList.contains('dark');
+                    applyTheme(isDark ? 'light' : 'dark');
+                });
+            }
+
+            // F. Initialize
+            const savedTheme = localStorage.theme || 'system';
+            applyTheme(savedTheme);
+
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+                if (!localStorage.theme) applyTheme('system');
+            });
     </script>
 </body>
 </html>
